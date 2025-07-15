@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>薛鑫颖的个人页面</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "微软雅黑", Arial, sans-serif;
+        background: url("./imgs/bg.jpg") no-repeat center center fixed;
+        background-size: cover;
+      }
+      .welcome-section {
+        width: 100vw;
+        height: 100vh;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        /* background: #fff; */
+      }
+      .welcome-bg-img {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+        object-fit: cover;
+        z-index: 0;
+        opacity: 0.25; /* 可调节背景透明度 */
+        pointer-events: none;
+      }
+      .welcome-title,
+      .scroll-tip {
+        position: relative;
+        z-index: 1;
+      }
+      .welcome-title {
+        font-size: 2.8em;
+        font-weight: bold;
+        margin-bottom: 16px;
+        text-shadow: 0 2px 8px #fff;
+      }
+      .scroll-tip {
+        font-size: 1.1em;
+        /* color: #888; */
+        margin-top: 40px;
+        animation: bounce 1.2s infinite;
+        transition: opacity 0.4s;
+      }
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(10px);
+        }
+      }
+      /* 让container居中显示 */
+      .container {
+        min-height: 80vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 0; /* 去掉圆角 */
+        padding: 0px 24px;
+        padding-top: 32px;
+        box-sizing: border-box;
+        margin: 0 auto;
+      }
+      .main-content {
+        display: flex;
+        gap: 180px; /* 增大间距，原来是100px */
+        margin-bottom: 32px;
+        align-items: center;
+        justify-content: center;
+      }
+      .photo-section {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .photo-box {
+        width: 180px;
+        height: 220px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 16px;
+      }
+      .photo-img {
+        max-width: 90%;
+        max-height: 90%;
+        object-fit: cover;
+        border-radius: 8px;
+      }
+      .intro {
+        font-size: 1.1em;
+        color: #333;
+        text-align: center;
+        margin-top: 8px;
+      }
+      .works-section {
+        flex: 2;
+      }
+      .works-title {
+        font-weight: bold;
+        margin-bottom: 12px;
+        font-size: 1.1em;
+        text-align: center;
+      }
+      .works-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        gap: 24px;
+        justify-items: center;
+        align-items: center;
+      }
+      .work-item {
+        width: 220px;
+        height: 220px;
+        /* 去掉背景和边框 */
+        background: none;
+        border: none;
+        border-radius: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        padding: 0;
+      }
+      .work-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      }
+      .contact-section {
+        margin-top: 32px;
+        text-align: center;
+        font-size: 1em;
+        color: #666;
+      }
+      .footer-section {
+        width: 100vw;
+        background: #232323;
+        color: #fff;
+        padding: 24px 0 0 0; /* 缩小上内边距 */
+        margin-top: 24px; /* 缩小与上方内容的间距 */
+        border-radius: 0; /* 去掉圆角 */
+        position: relative;
+        left: 0;
+        bottom: 0;
+      }
+      .footer-content {
+        max-width: 900px; /* 缩小最大宽度 */
+        margin: 0 auto;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 80px; /* 缩小左右分栏间距 */
+        padding: 0 20px 16px 20px; /* 缩小内边距 */
+      }
+      .footer-info {
+        min-width: 180px;
+        font-size: 1em; /* 字体略小 */
+        line-height: 1.7;
+      }
+      .footer-title {
+        font-size: 1.08em;
+        font-weight: bold;
+        margin-bottom: 8px;
+        color: #fff;
+      }
+      .footer-follow {
+        min-width: 80px;
+        text-align: center;
+      }
+      .footer-follow .footer-title {
+        color: #ffe082;
+      }
+      .footer-qrcode {
+        width: 44px;
+        height: 44px;
+        background: #fff;
+        border-radius: 6px;
+        margin: 8px auto 0 auto;
+      }
+      .footer-bottom {
+        border-top: 1px solid #444;
+        margin-top: 10px;
+        padding: 10px 0 6px 0;
+        text-align: center;
+        color: #bbb;
+        font-size: 0.92em;
+        letter-spacing: 1px;
+      }
+      @media (max-width: 800px) {
+        html,
+        body {
+          width: 100vw;
+          min-width: 100vw;
+          overflow-x: hidden;
+        }
+        .container {
+          width: 100vw;
+          min-width: 100vw;
+          padding: 0 4vw;
+          box-sizing: border-box;
+        }
+        .main-content {
+          flex-direction: column;
+          gap: 24px;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+        }
+        .photo-section,
+        .works-section {
+          width: 100%;
+          align-items: center;
+        }
+        .photo-box {
+          width: 60vw;
+          max-width: 220px;
+          height: 30vw;
+          max-height: 220px;
+        }
+        .photo-img {
+          max-width: 90%;
+          max-height: 90%;
+        }
+        .works-list {
+          width: 100%;
+          grid-template-columns: 1fr 1fr;
+          grid-template-rows: 1fr 1fr;
+          gap: 12px;
+        }
+        .work-item {
+          width: 40vw;
+          max-width: 160px;
+          height: 40vw;
+          max-height: 160px;
+        }
+        .work-img {
+          border-radius: 8px;
+        }
+        .footer-section {
+          width: 100vw;
+          padding: 12px 0 0 0;
+          margin-top: 16px;
+        }
+        .footer-content {
+          max-width: 100vw;
+          flex-direction: column;
+          gap: 12px;
+          padding: 0 8vw 8px 8vw;
+          align-items: flex-start;
+        }
+        .footer-info,
+        .footer-follow {
+          min-width: 0;
+          font-size: 0.98em;
+          text-align: left;
+        }
+        .footer-follow {
+          margin-top: 8px;
+          text-align: left;
+        }
+        .footer-qrcode {
+          margin-left: 0;
+        }
+        .footer-bottom {
+          font-size: 0.85em;
+          padding: 6px 0 4px 0;
+        }
+        /* 让标题在手机端一行显示 */
+        .welcome-title {
+          font-size: 1.3em;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          text-align: center;
+          width: 100vw;
+          box-sizing: border-box;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="welcome-section">
+      <div class="welcome-title">欢迎来到薛鑫颖的个人页面</div>
+      <div class="scroll-tip" id="scrollTip">↓ 下滑查看更多内容 ↓</div>
+    </div>
+    <div class="container">
+      <div class="main-content">
+        <div class="photo-section">
+          <div class="photo-box">
+            <img class="photo-img" src="./imgs/头像.jpg" alt="个人照片" />
+          </div>
+          <!-- <div class="intro">个人介绍随便说两句</div> -->
+        </div>
+        <div class="works-section">
+          <div class="works-title">个人作品</div>
+          <div class="works-list">
+            <div class="work-item">
+              <img class="work-img" src="./imgs/大一作品1.jpg" alt="作品1" />
+            </div>
+            <div class="work-item">
+              <img class="work-img" src="./imgs/大一作品2.jpg" alt="作品2" />
+            </div>
+            <div class="work-item">
+              <img class="work-img" src="./imgs/考前作品1.jpg" alt="作品3" />
+            </div>
+            <div class="work-item">
+              <img class="work-img" src="./imgs/考前作品2.jpg" alt="作品4" />
+            </div>
+            <!-- 可以继续添加作品 -->
+          </div>
+        </div>
+      </div>
+      <footer class="footer-section">
+        <div class="footer-content">
+          <div class="footer-info">
+            <div class="footer-title">联系我们</div>
+            <div>地址：咸阳师范学院</div>
+            <div>电话：010-0000-0000</div>
+            <div>邮箱：123456@qq.com</div>
+            <div>时间：09:00-18:00</div>
+          </div>
+          <div class="footer-follow">
+            <div class="footer-title">关注我们</div>
+            <div class="footer-qrcode"></div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          ©2024 个人博客 版权所有 京ICP备00000000号
+        </div>
+      </footer>
+    </div>
+    <script>
+      // 滚动隐藏“下滑查看更多内容”
+      window.addEventListener("scroll", function () {
+        const tip = document.getElementById("scrollTip");
+        if (window.scrollY > 60) {
+          tip.style.opacity = "0";
+          tip.style.pointerEvents = "none";
+        } else {
+          tip.style.opacity = "1";
+          tip.style.pointerEvents = "auto";
+        }
+      });
+    </script>
+  </body>
+</html>
